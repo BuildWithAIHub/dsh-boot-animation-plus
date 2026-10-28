@@ -1,55 +1,47 @@
 # DSH Boot Animation Plus
 
-给 DeepSeek Harness（DSH）加一个「打开就有片头动画」的开机效果：每次打开 DSH、打开新会话，或每次进入你**钉住**的那个会话时，满窗口播一段片头动画，再淡出进入工作区。
-
-这是 [NativeDog1/dsh-boot-animation](https://github.com/NativeDog1/dsh-boot-animation) 的社区 fork（BSD-3-Clause），在保留上游全部能力的基础上增加了**片库批量删除**。
-
+缁?DeepSeek Harness锛圖SH锛夊姞涓€涓€屾墦寮€灏辨湁鐗囧ご鍔ㄧ敾銆嶇殑寮€鏈烘晥鏋滐細姣忔鎵撳紑 DSH銆佹墦寮€鏂颁細璇濓紝鎴栨瘡娆¤繘鍏ヤ綘**閽変綇**鐨勯偅涓細璇濇椂锛屾弧绐楀彛鎾竴娈电墖澶村姩鐢伙紝鍐嶆贰鍑鸿繘鍏ュ伐浣滃尯銆?
+杩欐槸 [NativeDog1/dsh-boot-animation](https://github.com/NativeDog1/dsh-boot-animation) 鐨勭ぞ鍖?fork锛圔SD-3-Clause锛夛紝鍦ㄤ繚鐣欎笂娓稿叏閮ㄨ兘鍔涚殑鍩虹涓婂鍔犱簡**鐗囧簱鎵归噺鍒犻櫎**銆?
 > English: see [README.en.md](README.en.md).
 
-## 功能
+![Splash illustration](docs/images/splash.png)
 
-- **内置 4 段 DeepSeek 片头**：品牌、赛博朋克、数字角色苏醒、启动片头。全部**嵌入在代码里**（`lib/clips.data.js`），安装后不依赖任何外部视频文件。
-- **片库面板**：切换内置片头、预览选中项、把你自己的视频加进片库；支持「顺序 / 随机 / 单次」播放与适配方式（cover / contain）。
-- **按会话钉住**：把某个会话钉住后，每次进入它都重播（新会话则按全局设置）。
-- **本 fork 新增：批量删除** —— 片库支持多选、全选/清空，确认后**同步删除**你自己加入的视频文件（内置片头不可删，删除前有二次确认）。
-- **可选欢迎层**：在片头之上叠加一层欢迎界面（文字可自定义），**默认关闭**，喜欢纯视频的同学不用管它。
+*示意图：开屏播放时整屏都是片头，按 Esc 可跳过。图片由 docs/images/generate.py 用代码生成，不是截图，也不含任何真实数据。*
 
-## 安装
+![Clip library illustration](docs/images/library.png)
 
-DSH Desktop 可以在 **Settings → Plugins** 的安装框里填 GitHub 地址，或者用命令行：
+*示意图：片库支持多选、全选/清空与确认删除；内置片头不可删除，你自己加入的视频会同步删除文件。*
+
+## 鍔熻兘
+
+- **鍐呯疆 4 娈?DeepSeek 鐗囧ご**锛氬搧鐗屻€佽禌鍗氭湅鍏嬨€佹暟瀛楄鑹茶嫃閱掋€佸惎鍔ㄧ墖澶淬€傚叏閮?*宓屽叆鍦ㄤ唬鐮侀噷**锛坄lib/clips.data.js`锛夛紝瀹夎鍚庝笉渚濊禆浠讳綍澶栭儴瑙嗛鏂囦欢銆?- **鐗囧簱闈㈡澘**锛氬垏鎹㈠唴缃墖澶淬€侀瑙堥€変腑椤广€佹妸浣犺嚜宸辩殑瑙嗛鍔犺繘鐗囧簱锛涙敮鎸併€岄『搴?/ 闅忔満 / 鍗曟銆嶆挱鏀句笌閫傞厤鏂瑰紡锛坈over / contain锛夈€?- **鎸変細璇濋拤浣?*锛氭妸鏌愪釜浼氳瘽閽変綇鍚庯紝姣忔杩涘叆瀹冮兘閲嶆挱锛堟柊浼氳瘽鍒欐寜鍏ㄥ眬璁剧疆锛夈€?- **鏈?fork 鏂板锛氭壒閲忓垹闄?* 鈥斺€?鐗囧簱鏀寔澶氶€夈€佸叏閫?娓呯┖锛岀‘璁ゅ悗**鍚屾鍒犻櫎**浣犺嚜宸卞姞鍏ョ殑瑙嗛鏂囦欢锛堝唴缃墖澶翠笉鍙垹锛屽垹闄ゅ墠鏈変簩娆＄‘璁わ級銆?- **鍙€夋杩庡眰**锛氬湪鐗囧ご涔嬩笂鍙犲姞涓€灞傛杩庣晫闈紙鏂囧瓧鍙嚜瀹氫箟锛夛紝**榛樿鍏抽棴**锛屽枩娆㈢函瑙嗛鐨勫悓瀛︿笉鐢ㄧ瀹冦€?
+## 瀹夎
+
+DSH Desktop 鍙互鍦?**Settings 鈫?Plugins** 鐨勫畨瑁呮閲屽～ GitHub 鍦板潃锛屾垨鑰呯敤鍛戒护琛岋細
 
 ```bash
 dsh plugin --profile desktop add github:BuildWithAIHub/dsh-boot-animation-plus
 ```
 
-普通 `dsh web` 把 `desktop` 换成你的 profile 名（常见是 `web`）。安装后刷新页面或重启 DSH。
+鏅€?`dsh web` 鎶?`desktop` 鎹㈡垚浣犵殑 profile 鍚嶏紙甯歌鏄?`web`锛夈€傚畨瑁呭悗鍒锋柊椤甸潰鎴栭噸鍚?DSH銆?
+瑕佹眰锛欴SH `>= 0.1.5-rc.1`锛坄package.json` 鐨?`dsh.engines.dsh`锛夛紝Node.js `>= 20`銆?
+## 涓庝笂娓哥殑宸紓
 
-要求：DSH `>= 0.1.5-rc.1`（`package.json` 的 `dsh.engines.dsh`），Node.js `>= 20`。
-
-## 与上游的差异
-
-| 项 | 上游 dsh-boot-animation | 本 fork |
+| 椤?| 涓婃父 dsh-boot-animation | 鏈?fork |
 |---|---|---|
-| 片库批量删除 | 无 | ✅ 多选 / 全选 / 确认删除，同时删除用户视频文件 |
-| 内置片头 | 4 段 DeepSeek 片头 | 相同 4 段，不再包含第三方游戏片头 |
-| 欢迎层 | 默认开启 | 默认**关闭**（纯视频体验） |
-| 包名 | `dsh-boot-animation` | `dsh-boot-animation-plus`（避免与上游冲突） |
+| 鐗囧簱鎵归噺鍒犻櫎 | 鏃?| 鉁?澶氶€?/ 鍏ㄩ€?/ 纭鍒犻櫎锛屽悓鏃跺垹闄ょ敤鎴疯棰戞枃浠?|
+| 鍐呯疆鐗囧ご | 4 娈?DeepSeek 鐗囧ご | 鐩稿悓 4 娈碉紝涓嶅啀鍖呭惈绗笁鏂规父鎴忕墖澶?|
+| 娆㈣繋灞?| 榛樿寮€鍚?| 榛樿**鍏抽棴**锛堢函瑙嗛浣撻獙锛?|
+| 鍖呭悕 | `dsh-boot-animation` | `dsh-boot-animation-plus`锛堥伩鍏嶄笌涓婃父鍐茬獊锛?|
 
-## 开发
-
+## 寮€鍙?
 ```bash
-npm run build     # 构建 lib/（含把 media/*.mp4 嵌入 lib/clips.data.js）
-npm run check     # 22 组校验脚本
-```
+npm run build     # 鏋勫缓 lib/锛堝惈鎶?media/*.mp4 宓屽叆 lib/clips.data.js锛?npm run check     # 22 缁勬牎楠岃剼鏈?```
 
-构建产物 `lib/` 已提交在仓库里，所以从源码安装时**不会**触发任何构建脚本。
+鏋勫缓浜х墿 `lib/` 宸叉彁浜ゅ湪浠撳簱閲岋紝鎵€浠ヤ粠婧愮爜瀹夎鏃?*涓嶄細**瑙﹀彂浠讳綍鏋勫缓鑴氭湰銆?
+## 闅愮
 
-## 隐私
-
-- 插件只读写本地 DSH 配置和视频目录，不发送任何网络请求；
-- 没有遥测、统计或账号相关代码。
-
-## 许可与素材
-
-- 代码：BSD-3-Clause，见 [LICENSE](LICENSE)；上游版权归 NativeDog1/dsh-boot-animation，见 [NOTICE.md](NOTICE.md)。
-- 内置的 4 段片头视频来自 DSH/DeepSeek 品牌素材，版权归权利人所有，仅随插件作为开屏演示分发；如权利人要求会立即移除。
+- 鎻掍欢鍙鍐欐湰鍦?DSH 閰嶇疆鍜岃棰戠洰褰曪紝涓嶅彂閫佷换浣曠綉缁滆姹傦紱
+- 娌℃湁閬ユ祴銆佺粺璁℃垨璐﹀彿鐩稿叧浠ｇ爜銆?
+## 璁稿彲涓庣礌鏉?
+- 浠ｇ爜锛欱SD-3-Clause锛岃 [LICENSE](LICENSE)锛涗笂娓哥増鏉冨綊 NativeDog1/dsh-boot-animation锛岃 [NOTICE.md](NOTICE.md)銆?- 鍐呯疆鐨?4 娈电墖澶磋棰戞潵鑷?DSH/DeepSeek 鍝佺墝绱犳潗锛岀増鏉冨綊鏉冨埄浜烘墍鏈夛紝浠呴殢鎻掍欢浣滀负寮€灞忔紨绀哄垎鍙戯紱濡傛潈鍒╀汉瑕佹眰浼氱珛鍗崇Щ闄ゃ€?

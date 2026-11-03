@@ -1,7 +1,7 @@
 import { fileURLToPath } from 'node:url'
 import type { UserConfig } from 'tsdown'
 
-const PLUGIN_ID = "dsh-boot-animation"
+const PLUGIN_ID = "dsh-boot-animation-plus"
 
 const CLIENT_EXTERNALS = [
   'react', 'react/jsx-runtime', 'react-dom', 'react-dom/client',

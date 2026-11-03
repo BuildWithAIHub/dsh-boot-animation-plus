@@ -1,9 +1,9 @@
-# Bundle patch for dsh-boot-animation.
+# Bundle patch for dsh-boot-animation-plus.
 #
 # This is what makes the package a PROFILE LAYER rather than an inert
 # dependency. When someone runs
 #
-#   dsh plugin --profile web add dsh-boot-animation
+#   dsh plugin --profile web add dsh-boot-animation-plus
 #
 # DSH reconciles dsh.profile.bundles against installed packages: a dependency
 # whose manifest declares `dsh.bundle.patch` (package.json) joins the layer
@@ -12,5 +12,5 @@
 #
 # The shape matches the shipped bundle patches (e.g. dsh-whale-widget).
 - insert:
-    - id: dsh-boot-animation
-      name: dsh-boot-animation
+    - id: dsh-boot-animation-plus
+      name: dsh-boot-animation-plus

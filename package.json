@@ -1,4 +1,4 @@
-﻿{
+{
   "name": "dsh-boot-animation-plus",
   "version": "0.7.1",
   "description": "Fork of dsh-boot-animation: plays an intro clip when DSH opens, ships four embedded clips, an in-app clip library, per-conversation pinning, and batch delete for your own clips.",

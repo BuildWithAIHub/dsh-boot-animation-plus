@@ -561,95 +561,6 @@ export function BootOverlay({ store }: { store: ClientStore }): ReactElement | n
  * appeared to play the wrong video — and the conversation pin is a third
  * question again, so it gets a third button rather than overloading one.
  */
-/** One editable string of the login layer. */
-type LoginTextKey = 'welcomeTitle' | 'welcomeName' | 'welcomeSubtitle' | 'welcomeHint'
-
-/** Editable welcome-layer strings. Saves on blur/Enter; blank is refused. */
-function LoginFields({ store }: { store: ClientStore }): ReactElement {
-  const snapshot = useClientStore(store)
-  const settings = snapshot.settings
-  const [drafts, setDrafts] = useState<Partial<Record<LoginTextKey, string>>>({})
-  const fields: Array<{ key: LoginTextKey; label: string; hint: string }> = [
-    { key: 'welcomeTitle', label: '欢迎语', hint: '例如：欢迎回来，' },
-    { key: 'welcomeName', label: '称呼', hint: '例如：管理员（可以改成你自己的名字）' },
-    { key: 'welcomeSubtitle', label: '英文副标题', hint: '例如：WELCOME BACK, ADMINISTRATOR' },
-    { key: 'welcomeHint', label: '底部提示', hint: '例如：点击任意处进入' },
-  ]
-  const settled: Record<LoginTextKey, string> = {
-    welcomeTitle: settings.welcomeTitle,
-    welcomeName: settings.welcomeName,
-    welcomeSubtitle: settings.welcomeSubtitle,
-    welcomeHint: settings.welcomeHint,
-  }
-  const commit = (key: LoginTextKey): void => {
-    const draft = drafts[key]
-    if (draft === undefined || draft.trim() === settled[key]) return
-    void store.setLoginText(key, draft).then((ok) => {
-      if (!ok) return
-      setDrafts((prev) => {
-        const next = { ...prev }
-        delete next[key]
-        return next
-      })
-    })
-  }
-  return h(
-    'div',
-    { className: 'dba-login' },
-    h(
-      'div',
-      { className: 'dba-login-head' },
-      h('span', null, '欢迎界面'),
-      h(
-        'button',
-        {
-          type: 'button',
-          className: 'dba-btn' + (settings.loginOverlay ? ' dba-btn-on' : ''),
-          title: '关掉后只播全屏视频，不显示欢迎界面 —— 回到最初的效果',
-          onClick: () => void store.setLoginOverlay(!settings.loginOverlay),
-        },
-        settings.loginOverlay ? '显示登录界面：开' : '显示登录界面：关',
-      ),
-    ),
-    fields.map((field) =>
-      h(
-        'label',
-        { className: 'dba-field', key: field.key },
-        h('span', { className: 'dba-field-label' }, field.label),
-        h('input', {
-          type: 'text',
-          className: 'dba-input',
-          value: drafts[field.key] ?? settled[field.key],
-          placeholder: field.hint,
-          maxLength: 120,
-          onChange: (event: ChangeEvent<HTMLInputElement>) =>
-            setDrafts((prev) => ({ ...prev, [field.key]: event.target.value })),
-          onBlur: () => commit(field.key),
-          onKeyDown: (event: ReactKeyboardEvent<HTMLInputElement>) => {
-            if (event.key === 'Enter') commit(field.key)
-          },
-        }),
-      ),
-    ),
-    h(
-      'div',
-      { className: 'dba-note' },
-      settings.loginOverlay
-        ? `当前显示：${settings.welcomeTitle}${settings.welcomeName}`
-        : '登录界面已关闭：只播全屏视频（回到最初的效果）',
-    ),
-    h(
-      'div',
-      { className: 'dba-note' },
-      '片头会自动全屏；声音跟随 Windows 默认输出设备（连着蓝牙耳机就自动走蓝牙）。',
-    ),
-    h(
-      'div',
-      { className: 'dba-note' },
-      'DSH 启动时先播开屏动画，程序在后台加载，加载好后自动进入工作界面（按 Esc 或点击可跳过）。',
-    ),
-  )
-}
 
 export function VideoLibrary({ store, onClose }: { store: ClientStore; onClose: () => void }): ReactElement {
   ensureStyle()
@@ -972,7 +883,6 @@ export function VideoLibrary({ store, onClose }: { store: ClientStore; onClose: 
             : '只在新建会话时播一次',
         ),
       ),
-      h(LoginFields, { store }),
       h(
         'div',
         { className: 'dba-bar' },
